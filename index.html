@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="zh-CN">
+<head>
+    <title> Swoole-push-demo </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        var wsServer = 'ws://192.168.214.130:9501';
+        var websocket = new WebSocket(wsServer);
+        websocket.onopen = function (evt) {
+            console.log("Connected to WebSocket server.");
+        };
+
+        websocket.onclose = function (evt) {
+            console.log("Disconnected");
+        };
+
+        websocket.onmessage = function (evt) {
+            console.log('Retrieved data from server: ' + evt.data);
+            var html = "<a class='list-group-item list-group-item-success'>" + evt.data + "</a>";
+            var selector = $( '.list-group > a:first' );
+            selector.before( html );
+        };
+
+        websocket.onerror = function (evt, e) {
+            console.log('Error occured: ' + evt.data);
+        };
+    </script>
+</head>
+<body>
+    <div class="page-header">
+      <h1> Swoole push client <small> 基于 Swoole 的浏览器推送 demo </small></h1>
+    </div>
+    <div class="list-group">
+      <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+      <a href="#" class="list-group-item">Morbi leo risus</a>
+      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+      <a href="#" class="list-group-item">Vestibulum at eros</a>
+    </div>
+
+    <a href="add.html" target="_blank" class="btn btn-info"> 添加信息 </a>
+    <br>
+    <div class="alert alert-warning" role="alert"> 请保留此页面，打开其他浏览器添加信息，此页面会自动显示你所添加的信息 </div>
+</body>
+</html>
